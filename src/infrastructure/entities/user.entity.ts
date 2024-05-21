@@ -11,4 +11,7 @@ export class UserEntity extends DefaultEntity {
 
   @Column()
   password: string;
+
+  @Column({ type: 'int', default: 1 })
+  enable: number;
 }

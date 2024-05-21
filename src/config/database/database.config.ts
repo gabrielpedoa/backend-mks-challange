@@ -1,5 +1,9 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { CategoryEntity } from 'src/infrastructure/entities/category.entity';
+import { DefaultEntity } from 'src/infrastructure/entities/default.entity';
+import { MovieEntity } from 'src/infrastructure/entities/movie.entity';
+import { UserEntity } from 'src/infrastructure/entities/user.entity';
 
 dotenv.config();
 
@@ -17,6 +21,6 @@ export const DBConfig: TypeOrmModuleOptions = {
     username: USERNAME,
     password: PASS,
     database: DB,
-    entities: [],
+    entities: [UserEntity, MovieEntity, CategoryEntity],
     synchronize: true,
 };

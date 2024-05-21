@@ -2,10 +2,19 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DBConfig } from 'src/config/database';
+import { DBConfig } from 'src/config/database/database.config';
+import { CacheModule } from '@nestjs/cache-manager';
+import { RedisConfig } from 'src/config/redis/redis.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(DBConfig)],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRoot(DBConfig),
+    CacheModule.registerAsync(RedisConfig),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,34 +1,55 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CreateUserDto, userSchema } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import {
+  ICreateUserUseCase,
+  IDeleteUserUseCase,
+  IFindAllUsersUseCase,
+  IFindOneUserUseCase,
+  IUpdateUserUseCase,
+} from './interfaces';
+import { ValidationException } from 'src/config/exceptions/errors/validation.exception';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly createUser: ICreateUserUseCase,
+    private readonly findAllUser: IFindAllUsersUseCase,
+    private readonly findOnUser: IFindOneUserUseCase,
+    private readonly updateUser: IUpdateUserUseCase,
+    private readonly deleteUser: IDeleteUserUseCase,
+  ) {}
 
-  @Post()
+  @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    return this.createUser.execute(createUserDto);
   }
 
-  @Get()
+  @Get('list')
   findAll() {
-    return this.usersService.findAll();
+    return this.findAllUser.execute();
   }
 
-  @Get(':id')
+  @Get('view/:id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.findOnUser.execute(Number(id));
   }
 
-  @Patch(':id')
+  /*  @Put('put/:id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
-  }
+    return this.updateUser.execute(String(updateUserDto.id));
+  } */
 
-  @Delete(':id')
+  @Delete('del/:id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+    return this.deleteUser.execute(+id);
   }
 }

@@ -8,13 +8,16 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
     const status = 500;
 
+    console.log(exception);
     Logger.error(exception, GlobalExceptionFilter.name);
 
     const errorObj = {
-      error_code: status,
-      error_type: exception.type,
-      error_details: {message: exception.message},
+      error_code: exception.status ? exception.status : status,
+      error_type: exception.response
+        ? exception.response.error
+        : 'NOT_IMPLEMENTED',
+      error_details: { message: exception.message },
     };
-    response.status(status).json(errorObj);
+    response.status(errorObj.error_code).json(errorObj);
   }
 }

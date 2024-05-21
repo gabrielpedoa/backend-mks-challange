@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DBConfig } from 'src/config/database';
 
 @Module({
-  imports: [],
+  imports: [TypeOrmModule.forRoot(DBConfig)],
   controllers: [AppController],
   providers: [AppService],
 })

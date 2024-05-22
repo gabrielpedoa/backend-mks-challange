@@ -1,34 +1,63 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MoviesService } from './movies.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/config/security/auth.guard';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
+import {
+  ICreateMovieUseCase,
+  IDeleteMovieUseCase,
+  IFindAllMovieUseCase,
+  IFindOneMovieUseCase,
+  IUpdateMovieUseCase,
+} from './interfaces';
 
 @Controller('movies')
+@ApiTags('Movies')
+@UseGuards(AuthGuard)
 export class MoviesController {
-  constructor(private readonly moviesService: MoviesService) {}
+  constructor(
+    private readonly createMovieUseCase: ICreateMovieUseCase,
+    private readonly findAllMovieUseCase: IFindAllMovieUseCase,
+    private readonly findOneMovieUseCase: IFindOneMovieUseCase,
+    private readonly updateMovieUseCase: IUpdateMovieUseCase,
+    private readonly deleteMovieUseCase: IDeleteMovieUseCase,
+  ) {}
 
-  @Post()
-  create(@Body() createMovieDto: CreateMovieDto) {
-    return this.moviesService.create(createMovieDto);
+  @Post('create')
+  async create(@Body() createMovieDto: CreateMovieDto) {
+    return await this.createMovieUseCase.execute(createMovieDto);
   }
 
-  @Get()
-  findAll() {
-    return this.moviesService.findAll();
+  @Get('list')
+  async findAll() {
+    return await this.findAllMovieUseCase.execute();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.moviesService.findOne(+id);
+  @Get('get/:title')
+  async findOne(@Param('title') title: string) {
+    return await this.findOneMovieUseCase.execute(title);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
-    return this.moviesService.update(+id, updateMovieDto);
+  @Put('update/:id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateMovieDto: UpdateMovieDto,
+  ) {
+    updateMovieDto.id = Number(id);
+    return await this.updateMovieUseCase.execute(updateMovieDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.moviesService.remove(+id);
+  @Delete('delete/:id')
+  async remove(@Param('id') id: string) {
+    return await this.deleteMovieUseCase.execute(+id);
   }
 }

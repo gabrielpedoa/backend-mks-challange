@@ -1,8 +1,7 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { DefaultEntity } from './default.entity';
-import { CategoryEntity } from './category.entity';
 
-@Entity({name:'movies'})
+@Entity({ name: 'movies' })
 export class MovieEntity extends DefaultEntity {
   @Column()
   title: string;
@@ -13,7 +12,9 @@ export class MovieEntity extends DefaultEntity {
   @Column()
   year: number;
 
-  @ManyToMany(() => CategoryEntity, (category) => category.movies)
-  @JoinColumn({ name: 'category_id' })
-  category_id: CategoryEntity[];
+  @Column({ type: 'int', default: 1 })
+  enable: number;
+
+  @Column()
+  category_id: string;
 }

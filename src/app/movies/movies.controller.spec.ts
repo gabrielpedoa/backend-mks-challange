@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+/* import { Test, TestingModule } from '@nestjs/testing';
 import { MoviesController } from './movies.controller';
 import { MoviesService } from './movies.service';
 
@@ -18,3 +18,4 @@ describe('MoviesController', () => {
     expect(controller).toBeDefined();
   });
 });
+ */

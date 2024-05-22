@@ -7,6 +7,7 @@ import { RedisConfig } from 'src/config/redis/redis.config';
 import { UsersModule } from './app/users/users.module';
 import { AuthModule } from './app/auth/auth.module';
 import { MovieCategoriesModule } from './app/movie-categories/movie-categories.module';
+import { MoviesModule } from './app/movies/movies.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { MovieCategoriesModule } from './app/movie-categories/movie-categories.m
     CacheModule.registerAsync(RedisConfig),
     UsersModule,
     AuthModule,
-    MovieCategoriesModule
+    MovieCategoriesModule,
+    MoviesModule,
   ],
   controllers: [],
   providers: [],

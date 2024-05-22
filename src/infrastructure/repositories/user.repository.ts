@@ -4,7 +4,6 @@ import { CreateUserDto } from 'src/app/users/dto/create-user.dto';
 import { UpdateUserDto } from 'src/app/users/dto/update-user.dto';
 import { Injectable } from '@nestjs/common';
 
-
 @Injectable()
 export class UserRepository {
   private readonly userRepository: Repository<UserEntity>;
@@ -18,7 +17,7 @@ export class UserRepository {
   }
 
   async loadAll() {
-    const users = await this.userRepository.find();
+    const users = await this.userRepository.find({ where: { enable: 1 } });
     return users;
   }
 
@@ -59,6 +58,7 @@ export class UserRepository {
     const updatedUser = await this.userRepository.findOne({
       where: { id: id },
     });
-    return { deleted: true, user: updatedUser };
+    const {createdAt, enable, password, updatedAt, ...rest} = updatedUser
+    return { deleted: true, user: rest };
   }
 }

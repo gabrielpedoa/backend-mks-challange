@@ -5,9 +5,13 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Put
 } from '@nestjs/common';
-import { CreateUserDto, userSchema } from './dto/create-user.dto';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+} from 'src/config/swagger/swagger.decorators';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ICreateUserUseCase,
@@ -16,7 +20,6 @@ import {
   IFindOneUserUseCase,
   IUpdateUserUseCase,
 } from './interfaces';
-import { ValidationException } from 'src/config/exceptions/errors/validation.exception';
 
 @Controller('users')
 export class UsersController {
@@ -27,29 +30,34 @@ export class UsersController {
     private readonly updateUser: IUpdateUserUseCase,
     private readonly deleteUser: IDeleteUserUseCase,
   ) {}
-
   @Post('create')
-  create(@Body() createUserDto: CreateUserDto) {
+  @ApiCreatedResponse('Created')
+  async create(@Body() createUserDto: CreateUserDto) {
     return this.createUser.execute(createUserDto);
   }
 
+  @ApiOkResponse('OK')
   @Get('list')
-  findAll() {
+  async findAll() {
     return this.findAllUser.execute();
   }
 
+  @ApiOkResponse('OK')
   @Get('view/:id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.findOnUser.execute(Number(id));
   }
 
-  /*  @Put('put/:id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.updateUser.execute(String(updateUserDto.id));
-  } */
+  @ApiOkResponse('OK')
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    updateUserDto.id = Number(id);
+    return this.updateUser.execute(updateUserDto);
+  }
 
+  @ApiOkResponse('OK')
   @Delete('del/:id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.deleteUser.execute(+id);
   }
 }

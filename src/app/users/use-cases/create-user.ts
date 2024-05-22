@@ -16,16 +16,17 @@ export class CreateUserUseCase implements ICreateUserUseCase {
   ) {}
 
   async execute(data: CreateUserDto): Promise<Omit<UserEntity, 'password'>> {
+    console.log(1)
     const emailAreadyUsed = await this.userRepository.loadByEmail(data.email);
     if (emailAreadyUsed)
       throw new ValidationException('This email already in use!');
     console.log(data);
-    //const hashPassword = await this.encrypter.generateHash(data.password);
+    const hashPassword = await this.encrypter.generateHash(data.password);
     const user = await this.userRepository.create({
       ...data,
-      //password: hashPassword,
+      password: hashPassword,
     });
-    //delete user.password;
+    delete user.password;
     return user;
   }
 }

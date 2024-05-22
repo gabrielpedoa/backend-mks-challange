@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+/* import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MovieCategoriesService } from './movie-categories.service';
 import { CreateMovieCategoryDto } from './dto/create-movie-category.dto';
 import { UpdateMovieCategoryDto } from './dto/update-movie-category.dto';
@@ -32,3 +32,4 @@ export class MovieCategoriesController {
     return this.movieCategoriesService.remove(+id);
   }
 }
+ */

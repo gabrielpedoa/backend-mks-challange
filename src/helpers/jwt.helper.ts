@@ -15,6 +15,7 @@ export class JwtHelper {
 
   async genToken(data: IJwtPayload): Promise<string> {
     const token = await this.jwt.signAsync(JSON.stringify(data));
+    console.log("helper: ",token)
     return token;
   }
 

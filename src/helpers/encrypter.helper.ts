@@ -12,7 +12,6 @@ export class Encrypter {
   async generateHash(value: string) {
     const salt = await bcrypt.genSalt(this.rounds);
     const hash = await bcrypt.hash(value, salt);
-    console.log("heeey",hash)
     return hash;
   }
 }

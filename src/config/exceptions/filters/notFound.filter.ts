@@ -10,7 +10,7 @@ export class NotFoundExceptionFilter implements ExceptionFilter {
     const status = 404;
 
     Logger.error(exception, NotFoundExceptionFilter.name);
-    console.log(exception);
+    console.log(1);
     const errorObj = {
       error_code: status,
       error_type: exception.error_type,

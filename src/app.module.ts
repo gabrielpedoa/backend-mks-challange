@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DBConfig } from 'src/config/database/database.config';
 import { RedisConfig } from 'src/config/redis/redis.config';
 import { UsersModule } from './app/users/users.module';
+import { AuthModule } from './app/auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UsersModule } from './app/users/users.module';
     TypeOrmModule.forRoot(DBConfig),
     CacheModule.registerAsync(RedisConfig),
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

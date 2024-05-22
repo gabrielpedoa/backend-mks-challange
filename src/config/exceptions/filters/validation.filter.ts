@@ -10,7 +10,7 @@ export class PayloadExceptionFilter implements ExceptionFilter {
     const status = 400;
 
     Logger.error(exception, PayloadExceptionFilter.name);
-
+    console.log(2)
     const errorObj = {
       error_code: status,
       error_type: exception.error_type,

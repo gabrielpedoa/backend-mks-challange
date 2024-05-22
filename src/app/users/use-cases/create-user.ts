@@ -16,7 +16,6 @@ export class CreateUserUseCase implements ICreateUserUseCase {
   ) {}
 
   async execute(data: CreateUserDto): Promise<Omit<UserEntity, 'password'>> {
-    console.log(1)
     const emailAreadyUsed = await this.userRepository.loadByEmail(data.email);
     if (emailAreadyUsed)
       throw new ValidationException('This email already in use!');

@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, Min } from 'class-validator';
+import { IsEmail, ValidateIf } from 'class-validator';
 
 export class UpdateUserDto {
-  @ApiProperty({ name: 'id', example: 12 })
-  @IsNotEmpty({ message: 'Id is required!' })
+  @ApiProperty({ enumName: 'id', example: '2' })
   id: number;
-  @ApiProperty({ name: 'name', example: 'gabriel' })
-  name: string;
-  @ApiProperty({ name: 'email', example: 'gabriel@email.com' })
+  @ApiProperty({ enumName: 'name', example: 'gabriel' })
+  name?: string;
+  @ApiProperty({ enumName: 'email', example: 'example@email.com' })
   @IsEmail()
-  email: string;
-  @ApiProperty({ name: 'password', example: 'mypassword123' })
-  password: string;
+  @ValidateIf(object => object.email)
+  email?: string;
+  @ApiProperty({ enumName: 'password', example: 'any_pass' })
+  password?: string;
 }

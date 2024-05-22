@@ -10,7 +10,6 @@ export class UnauthorizedExceptionFilter implements ExceptionFilter {
     const status = 401;
 
     Logger.error(exception, UnauthorizedExceptionFilter.name);
-
     const errorObj = {
       error_code: status,
       error_type: exception.error_type,

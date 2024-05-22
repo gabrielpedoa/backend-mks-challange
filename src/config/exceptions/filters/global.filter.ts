@@ -8,7 +8,6 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const response = context.getResponse<Response>();
     const status = 500;
 
-    console.log(exception);
     Logger.error(exception, GlobalExceptionFilter.name);
 
     const errorObj = {
@@ -16,7 +15,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       error_type: exception.response
         ? exception.response.error
         : 'NOT_IMPLEMENTED',
-      error_details: { message: exception.message },
+      error_details: {
+        message: exception.response
+          ? exception.response.message
+          : exception.message,
+      },
     };
     response.status(errorObj.error_code).json(errorObj);
   }

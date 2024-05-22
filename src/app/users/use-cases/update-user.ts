@@ -14,7 +14,7 @@ export class UpdateUserUseCase implements IUpdateUserUseCase {
   async execute(data: UpdateUserDto): Promise<Omit<UserEntity, 'password'>> {
     const user = await this.userRepository.loadById(data.id);
     if (!user) throw new NotFoundException('User not found!');
-    if (user.email != data.email) {
+    if (user.email !== data.email) {
       const emailAlreadyUSed = await this.userRepository.loadByEmail(
         data.email,
       );
@@ -25,7 +25,7 @@ export class UpdateUserUseCase implements IUpdateUserUseCase {
       ...data,
       id: Number(data.id),
     });
-    
+
     return updatedUser;
   }
 }

@@ -5,7 +5,8 @@ import {
   Get,
   Param,
   Post,
-  Put
+  Put,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiCreatedResponse,
@@ -20,8 +21,10 @@ import {
   IFindOneUserUseCase,
   IUpdateUserUseCase,
 } from './interfaces';
+import { AuthGuard } from 'src/config/security/auth.guard';
 
 @Controller('users')
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(
     private readonly createUser: ICreateUserUseCase,
@@ -43,20 +46,20 @@ export class UsersController {
   }
 
   @ApiOkResponse('OK')
-  @Get('view/:id')
+  @Get('get/:id')
   async findOne(@Param('id') id: string) {
     return this.findOnUser.execute(Number(id));
   }
 
   @ApiOkResponse('OK')
-  @Put(':id')
+  @Put('update/:id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     updateUserDto.id = Number(id);
     return this.updateUser.execute(updateUserDto);
   }
 
   @ApiOkResponse('OK')
-  @Delete('del/:id')
+  @Delete('delete/:id')
   async remove(@Param('id') id: string) {
     return this.deleteUser.execute(+id);
   }

@@ -6,6 +6,7 @@ import { DBConfig } from 'src/config/database/database.config';
 import { RedisConfig } from 'src/config/redis/redis.config';
 import { UsersModule } from './app/users/users.module';
 import { AuthModule } from './app/auth/auth.module';
+import { MovieCategoriesModule } from './app/movie-categories/movie-categories.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './app/auth/auth.module';
     CacheModule.registerAsync(RedisConfig),
     UsersModule,
     AuthModule,
+    MovieCategoriesModule
   ],
   controllers: [],
   providers: [],

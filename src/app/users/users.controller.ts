@@ -22,8 +22,10 @@ import {
   IUpdateUserUseCase,
 } from './interfaces';
 import { AuthGuard } from 'src/config/security/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('Users')
 @UseGuards(AuthGuard)
 export class UsersController {
   constructor(

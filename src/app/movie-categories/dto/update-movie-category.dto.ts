@@ -1,4 +1,13 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateMovieCategoryDto } from './create-movie-category.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateMovieCategoryDto extends PartialType(CreateMovieCategoryDto) {}
+export class UpdateMovieCategoryDto {
+  @ApiProperty({ enumName: 'id', example: '2' })
+  id: number;
+  @ApiProperty({ enumName: 'category', example: 'action' })
+  category: string;
+  @ApiProperty({
+    enumName: 'description',
+    example: 'any descritpion of category movie',
+  })
+  description: string;
+}

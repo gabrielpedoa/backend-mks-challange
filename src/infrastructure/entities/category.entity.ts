@@ -10,6 +10,9 @@ export class CategoryEntity extends DefaultEntity {
   @Column()
   description: string;
 
+  @Column({ type: 'int', default: 1 })
+  enable: number;
+
   @ManyToMany(() => MovieEntity, movie => movie.category_id)
   movies: MovieEntity[];
 }

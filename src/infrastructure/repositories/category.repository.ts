@@ -17,7 +17,9 @@ export class CategoryRepository {
   }
 
   async loadAll() {
-    const loadCategories = await this.categoryRepository.find();
+    const loadCategories = await this.categoryRepository.find({
+      where: { enable: 1 },
+    });
     return loadCategories;
   }
 
@@ -49,8 +51,12 @@ export class CategoryRepository {
         id: id,
       },
     });
-    await this.categoryRepository.delete({ id: id });
-    return { deleted: true, category };
+
+    category.enable = 0;
+    await this.categoryRepository.save(category);
+    const updatedCategory = await this.categoryRepository.findOne({
+      where: { id: id },
+    });
+    return { deleted: true, updatedCategory };
   }
-  
 }

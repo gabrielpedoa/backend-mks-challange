@@ -2,8 +2,10 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { LoginDto } from './dto/login-dto';
 import { ILoginAuthUseCase } from './interfaces/login-auth.interface';
 import { ApiCreatedResponse } from 'src/config/swagger/swagger.decorators';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
+@ApiTags('Auth')
 export class AuthController {
   constructor(private readonly loginAuthUseCase: ILoginAuthUseCase) {}
 

@@ -13,7 +13,6 @@ export class AuthController {
   @Post('login')
   @ApiCreatedResponse('Created')
   create(@Body() createAuthDto: LoginDto) {
-    console.log(1);
     return this.loginAuthUseCase.execute(createAuthDto);
   }
 }

@@ -21,12 +21,12 @@ describe('AuthController', () => {
     login = module.get<ILoginAuthUseCase>(ILoginAuthUseCase);
   });
 
-  it('should be defined', () => {
+  test('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
   describe('create', () => {
-    it('should call loginAuthUseCase.execute with the provided dto', () => {
+    test('should call loginAuthUseCase.execute with the provided dto', () => {
       ApiCreatedResponse('Created');
       const dto = {} as LoginDto;
       const executeSpy = jest.spyOn(login, 'execute');

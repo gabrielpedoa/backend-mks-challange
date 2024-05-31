@@ -8,6 +8,7 @@ import { UsersModule } from './app/users/users.module';
 import { AuthModule } from './app/auth/auth.module';
 import { MovieCategoriesModule } from './app/movie-categories/movie-categories.module';
 import { MoviesModule } from './app/movies/movies.module';
+import { RepositoryModule } from './infrastructure/repositories/repository.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { MoviesModule } from './app/movies/movies.module';
     AuthModule,
     MovieCategoriesModule,
     MoviesModule,
+    RepositoryModule
   ],
   controllers: [],
   providers: [],
